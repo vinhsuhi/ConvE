@@ -182,10 +182,9 @@ if __name__ == '__main__':
     parser.add_argument('--use-bias', action='store_true', help='Use a bias in the convolutional layer. Default: True')
     parser.add_argument('--label-smoothing', type=float, default=0.1, help='Label smoothing value to use. Default: 0.1')
     parser.add_argument('--hidden-size', type=int, default=9728, help='The side of the hidden layer. The required size changes with the size of the embeddings. Default: 9728 (embedding size 200).')
+    parser.add_argument('--suhi', type=str, default="suhi")
 
     args = parser.parse_args()
-
-
 
     # parse console parameters and set global variables
     Config.backend = 'pytorch'
@@ -193,9 +192,16 @@ if __name__ == '__main__':
     Config.embedding_dim = args.embedding_dim
     #Logger.GLOBAL_LOG_LEVEL = LogLevel.DEBUG
 
-
-    model_name = '{2}_{0}_{1}'.format(args.input_drop, args.hidden_drop, args.model)
+    model_name = '{2}_{0}_{1}_{3}'.format(args.input_drop, args.hidden_drop, args.model, args.suhi)
     model_path = 'saved_models/{0}_{1}.model'.format(args.data, model_name)
 
     torch.manual_seed(args.seed)
     main(args, model_path)
+
+
+# script
+"""
+CUDA_VISIBLE_DEVICES=0 python main.py --model conve --data WN18 \
+                                      --input-drop 0.2 --hidden-drop 0.3 --feat-drop 0.2 \
+                                      --lr 0.003 --suhi foreval --epochs 2000
+""" 
