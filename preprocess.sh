@@ -1,5 +1,5 @@
 #!/bin/bash
-mkdir data
+# mkdir data
 mkdir data/WN18RR
 mkdir data/YAGO3-10
 mkdir data/FB15k-237
@@ -14,6 +14,7 @@ tar -xvf umls.tar.gz -C data/umls
 tar -xvf kinship.tar.gz -C data/kinship
 tar -xvf nations.tar.gz -C data/nations
 python wrangle_KG.py WN18RR
+# python wrangle_KG.py WN18
 python wrangle_KG.py YAGO3-10
 python wrangle_KG.py FB15k-237
 python wrangle_KG.py umls
