@@ -153,11 +153,10 @@ def main(args, model_path):
 
         model.eval()
         with torch.no_grad():
-            if epoch % 5 == 0 and epoch > 0:
-                ranking_and_hits(model, dev_rank_batcher, vocab, 'dev_evaluation')
             if epoch % 5 == 0:
-                if epoch > 0:
-                    ranking_and_hits(model, test_rank_batcher, vocab, 'test_evaluation')
+                ranking_and_hits(model, dev_rank_batcher, vocab, 'dev_evaluation')
+                ranking_and_hits(model, test_rank_batcher, vocab, 'test_evaluation')
+
 
 
 if __name__ == '__main__':
