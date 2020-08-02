@@ -5,6 +5,7 @@ import datetime
 from spodernet.utils.logger import Logger
 from torch.autograd import Variable
 from sklearn import metrics
+from tqdm import tqdm 
 
 log = Logger('evaluation{0}.py.txt'.format(datetime.datetime.now()))
 
@@ -25,7 +26,7 @@ def ranking_and_hits(model, dev_rank_batcher, vocab, name):
         hits_right.append([])
         hits.append([])
 
-    for i, str2var in enumerate(dev_rank_batcher):
+    for i, str2var in tqdm(enumerate(dev_rank_batcher)):
         e1 = str2var['e1']
         e2 = str2var['e2']
         rel = str2var['rel']
