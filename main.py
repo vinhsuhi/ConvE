@@ -203,5 +203,5 @@ if __name__ == '__main__':
 """
 CUDA_VISIBLE_DEVICES=0 python main.py --model conve --data WN18 \
                                       --input-drop 0.2 --hidden-drop 0.3 --feat-drop 0.2 \
-                                      --lr 0.003 --suhi foreval --epochs 2000
+                                      --lr 0.003 --suhi foreval --epochs 2000 --resume
 """ 

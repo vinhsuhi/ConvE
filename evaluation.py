@@ -26,7 +26,8 @@ def ranking_and_hits(model, dev_rank_batcher, vocab, name):
         hits_right.append([])
         hits.append([])
 
-    for i, str2var in tqdm(enumerate(dev_rank_batcher)):
+    for i, str2var in tqdm(enumerate(dev_rank_batcher)): # 39 iterations, each consist of 128 (batch_size) triples
+        # e1: 128 x 1, ew_multi: 128 x 510, rel_reverse, rel: 128 x 1
         e1 = str2var['e1']
         e2 = str2var['e2']
         rel = str2var['rel']
@@ -40,20 +41,22 @@ def ranking_and_hits(model, dev_rank_batcher, vocab, name):
         e2_multi1, e2_multi2 = e2_multi1.data, e2_multi2.data
         for i in range(e1.shape[0]):
             # these filters contain ALL labels
-            filter1 = e2_multi1[i].long()
+            filter1 = e2_multi1[i].long() # list of coresponding e2
             filter2 = e2_multi2[i].long()
 
             num = e1[i, 0].item()
             # save the prediction that is relevant
-            target_value1 = pred1[i,e2[i, 0].item()].item()
+            target_value1 = pred1[i,e2[i, 0].item()].item() # equal to 1 or 0 (1 is right and 0 is wrong)
             target_value2 = pred2[i,e1[i, 0].item()].item()
             # zero all known cases (this are not interesting)
             # this corresponds to the filtered setting
-            pred1[i][filter1] = 0.0
+            pred1[i][filter1] = 0.0 # predict[i] is a binary vector size = (num_entities)
             pred2[i][filter2] = 0.0
             # write base the saved values
             pred1[i][e2[i]] = target_value1
             pred2[i][e1[i]] = target_value2
+            import pdb
+            pdb.set_trace()
 
 
         # sort and rank
